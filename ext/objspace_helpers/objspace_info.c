@@ -1,8 +1,5 @@
 #include <objspace_info.h>
 
-// FIXME: Link objspace library instead
-#include <ruby_private/objspace_tracing.c>
-
 static inline const char *
 obj_type(VALUE obj)
 {

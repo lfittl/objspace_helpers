@@ -25,7 +25,6 @@ Gem::Specification.new do |s|
     ext/objspace_helpers/ruby_private/gc.h
     ext/objspace_helpers/ruby_private/internal_defs.h
     ext/objspace_helpers/ruby_private/objspace.h
-    ext/objspace_helpers/ruby_private/objspace_tracing.c
     lib/objspace_helpers.rb
     lib/objspace_helpers/helpers.rb
     lib/objspace_helpers/version.rb

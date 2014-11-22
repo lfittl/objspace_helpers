@@ -12,4 +12,4 @@ struct allocation_info {
   VALUE mid;
   size_t generation;
 };
-struct allocation_info *objspace_lookup_allocation_info(VALUE obj);
+extern struct allocation_info *objspace_lookup_allocation_info(VALUE obj);

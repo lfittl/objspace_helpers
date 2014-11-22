@@ -22,16 +22,15 @@ static VALUE oh_dump_addresses(VALUE self)
 
 static VALUE oh_addresses_to_info(VALUE self, VALUE ary)
 {
-  static const char filename[] = "rubyobj";
-  VALUE obj = Qnil, opts = Qnil;
+  VALUE hash, obj_addr, info_hash;
+  long i;
 
-  VALUE hash = rb_hash_new();
+  hash = rb_hash_new();
 
-  for (size_t i = 0; i < RARRAY_LEN(ary); i += 1) {
-    VALUE obj_addr = rb_ary_entry(ary, i);
-    VALUE obj = FIX2PTR(obj_addr);
-    VALUE info_hash = rb_hash_new();
-    objspace_info(obj, info_hash);
+  for (i = 0; i < RARRAY_LEN(ary); i += 1) {
+    obj_addr = rb_ary_entry(ary, i);
+    info_hash = rb_hash_new();
+    objspace_info(FIX2PTR(obj_addr), info_hash);
     rb_hash_aset(hash, obj_addr, info_hash);
   }
 

@@ -150,5 +150,27 @@ describe ObjspaceHelpers do
 
       expect(refs).to include "yay"
     end
+
+    it 'can dump trace information' do
+      obj = nil
+      ObjectSpace::trace_object_allocations do
+        obj = "foobar"
+      end
+
+      info = subject.info_for_obj(obj)
+      info.delete('class')
+      expect(info).to eq({
+        "type"=>"STRING",
+        "embedded"=>true,
+        "bytesize"=>6,
+        "value"=>"foobar",
+        "encoding"=>"UTF-8",
+        "references"=>[],
+        "file"=>"/Users/lfittl/Code/objspace-helpers/spec/lib/helpers_spec.rb",
+        "line"=>__LINE__ - 13,
+        "generation"=>GC.count,
+        "flags"=>{"wb_protected"=>true}
+      })
+    end
   end
 end
