@@ -1,0 +1,1 @@
+require 'objspace_helpers'
