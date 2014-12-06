@@ -166,7 +166,7 @@ describe ObjspaceHelpers do
         "value"=>"foobar",
         "encoding"=>"UTF-8",
         "references"=>[],
-        "file"=>"/Users/lfittl/Code/objspace-helpers/spec/lib/helpers_spec.rb",
+        "file"=>__FILE__,
         "line"=>__LINE__ - 13,
         "generation"=>GC.count,
         "flags"=>{"wb_protected"=>true}
