@@ -4,7 +4,7 @@ describe ObjspaceHelpers do
   subject { described_class }
 
   def addrs2objs(addrs)
-    addrs.map {|r| subject.obj_for(r) }
+    addrs.map {|r| ObjectSpace._id2ref(r) }
   end
 
   describe '.dump_all_addresses' do
@@ -13,7 +13,7 @@ describe ObjspaceHelpers do
 
       x = subject.dump_all_addresses
       expect(x).not_to be_nil
-      expect(x).to include subject.address_of(test_obj)
+      expect(x).to include test_obj.object_id
     end
   end
 
@@ -24,10 +24,8 @@ describe ObjspaceHelpers do
         obj = "mystring"
       end
 
-      obj_addr = subject.address_of(obj)
-
       expect(addresses).not_to be_nil
-      expect(addresses).to eq [obj_addr]
+      expect(addresses).to eq [obj.object_id]
       expect(addresses.size).to eq 1
     end
   end
@@ -40,10 +38,9 @@ describe ObjspaceHelpers do
       end
 
       dump = subject.info_for_address(addresses)
-      obj_addr = subject.address_of(obj)
 
-      if info = dump[obj_addr]
-        klass = subject.obj_for(info.delete('class'))
+      if info = dump[obj.object_id]
+        klass = ObjectSpace._id2ref(info.delete('class'))
         refs  = addrs2objs info.delete('references')
         [info, klass, refs]
       else

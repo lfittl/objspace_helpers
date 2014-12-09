@@ -8,14 +8,16 @@ class ObjspaceHelpers
       block.call
 
       # Run GC twice to try to get rid of as much false positives as possible
-      GC.start
-      GC.start
+      ObjectSpace.garbage_collect
+      ObjectSpace.garbage_collect
 
-      objs_after       = _dump_addresses
+      objs_after = _dump_addresses
 
       ObjectSpace::trace_object_allocations_stop if trace
 
-      leaked_addresses = objs_after - objs_before - [_address_of_obj(objs_after)]
+      leaked_addresses = objs_after - objs_before - [objs_after.object_id]
+
+      GC.disable
 
       # Note (LukasFittl): 2x speedup if we move this to native code
       referenced_by = {}
@@ -25,6 +27,8 @@ class ObjspaceHelpers
           referenced_by[ref] << addr
         end
       end
+
+      GC.enable
 
       TrackedObject.wrap(leaked_addresses, referenced_by)
     end

@@ -26,6 +26,6 @@ class ObjspaceHelpers::TrackedObject
   end
 
   def dereference
-    ObjspaceHelpers._obj_for_address(@address)
+    ObjspaceHelpers._id2ref(@address)
   end
 end

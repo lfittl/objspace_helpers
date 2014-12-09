@@ -38,11 +38,11 @@ obj_type(VALUE obj)
 static void
 reachable_object_i(VALUE ref, void *data)
 {
-  rb_ary_push((VALUE)data, PTR2FIX(ref));
+  rb_ary_push((VALUE)data, rb_obj_id(ref));
 }
 
 #define HASH_SET(k,v) rb_hash_aset(target_hash, rb_str_new2(k), v)
-#define HASH_SET_PTR(k,v) HASH_SET(k,INT2FIX((void *)v))
+#define HASH_SET_PTR(k,v) HASH_SET(k,rb_obj_id(v))
 #define HASH_SET_INT(k,v) HASH_SET(k,INT2FIX(v))
 #define HASH_SET_UINT(k,v) HASH_SET(k,UINT2NUM(v))
 #define HASH_SET_ULONG(k,v) HASH_SET(k,ULONG2NUM(v))
@@ -150,7 +150,7 @@ objspace_info(VALUE obj, VALUE target_hash)
   }
 
   rb_objspace_reachable_objects_from(obj, reachable_object_i, (void*)references);
-  rb_ary_delete(references, PTR2FIX(obj_klass));
+  rb_ary_delete(references, rb_obj_id(obj_klass));
   HASH_SET("references", references);
 
   if ((ainfo = objspace_lookup_allocation_info(obj))) {
