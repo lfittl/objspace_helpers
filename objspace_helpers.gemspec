@@ -22,11 +22,15 @@ Gem::Specification.new do |s|
     ext/objspace_helpers/objspace_helpers.h
     ext/objspace_helpers/objspace_info.c
     ext/objspace_helpers/objspace_info.h
+    ext/objspace_helpers/id2ref.c
+    ext/objspace_helpers/id2ref.h
     ext/objspace_helpers/ruby_private/gc.h
     ext/objspace_helpers/ruby_private/internal_defs.h
     ext/objspace_helpers/ruby_private/objspace.h
     lib/objspace_helpers.rb
     lib/objspace_helpers/helpers.rb
+    lib/objspace_helpers/leaks.rb
+    lib/objspace_helpers/tracked_object.rb
     lib/objspace_helpers/version.rb
   ]
 
